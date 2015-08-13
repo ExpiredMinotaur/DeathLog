@@ -1,0 +1,14 @@
+## gradle
+/.gradle
+/build
+
+## Other
+/dep
+
+## eclipse
+/eclipse
+/.settings
+/.metadata
+/.classpath
+/.project
+/bin
