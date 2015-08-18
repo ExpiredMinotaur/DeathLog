@@ -21,7 +21,7 @@ public class GuiHandler implements IGuiHandler
 			int x, int y, int z)
 	{
 
-		if (ID== GuiIDs.DEATH_LOG.ordinal())
+		if (ID == GuiIDs.DEATH_LOG.ordinal())
 		{
 			GuiDeathLog log = GuiDeathLog.log;
 			return log;
