@@ -12,6 +12,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import danielm59.deathlog.handler.ConfigurationHandler;
 import danielm59.deathlog.handler.DLEventHandler;
 import danielm59.deathlog.handler.GuiHandler;
+import danielm59.deathlog.handler.LogHandler;
 import danielm59.deathlog.init.ModItems;
 import danielm59.deathlog.proxy.IProxy;
 import danielm59.deathlog.reference.Reference;
@@ -46,6 +47,7 @@ public class DeathLog
 	@EventHandler
 	public void PostInit(FMLPostInitializationEvent event)
 	{
+		LogHandler.loadData();
 		LogHelper.info("Post Initialization Complete!");
 	}
 
