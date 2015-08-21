@@ -8,9 +8,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.LinkedHashMap;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import danielm59.deathlog.DeathLog;
 import danielm59.deathlog.utility.LogHelper;
 
 public class LogHandler
@@ -23,8 +25,7 @@ public class LogHandler
 			try
 			{
 				FileInputStream fileIn = new FileInputStream(
-						Minecraft.getMinecraft().mcDataDir
-								+ "/DeathLog/log.ser");
+						DeathLog.proxy.getLogPath());
 				ObjectInputStream in = new ObjectInputStream(fileIn);
 				data = (LinkedHashMap) in.readObject();
 				in.close();
@@ -44,8 +45,7 @@ public class LogHandler
 	{
 		try
 		{
-			File file = new File(Minecraft.getMinecraft().mcDataDir
-					+ "/DeathLog/log.ser");
+			File file = new File(DeathLog.proxy.getLogPath());
 			if (!file.exists())
 			{
 				file.getParentFile().mkdirs();
@@ -57,7 +57,7 @@ public class LogHandler
 			out.writeObject(data);
 			out.close();
 			fileOut.close();
-			LogHelper.info("Serialized data is saved in /deathlog/log.ser");
+			LogHelper.info("Saved Death Data");
 		} catch (IOException i)
 		{
 			i.printStackTrace();
@@ -69,7 +69,6 @@ public class LogHandler
 		EntityPlayer player = (EntityPlayer) event.entity;
 		String name = player.getCommandSenderName();
 		String source = event.source.damageType;
-		LogHelper.info("player death:" + name + " by " + source);
 		int old = 0;
 		if (data.containsKey(name))
 		{
@@ -77,6 +76,6 @@ public class LogHandler
 		}
 		data.put(name, old + 1);
 		saveData();
-		LogHelper.info(name + " : " + data.get(name));
+		MinecraftServer.getServer().getConfigurationManager().sendChatMsg(new ChatComponentText(name + " has died "+ data.get(name) + " times"));
 	}
 }
