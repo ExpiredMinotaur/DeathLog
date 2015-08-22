@@ -18,7 +18,7 @@ public class DLEventHandler
 		{
 			if (event.entity instanceof EntityPlayer)
 			{
-				LogHandler.LogEvent(event);
+				LogHandler.logEvent(event);
 			}
 		}
 	}

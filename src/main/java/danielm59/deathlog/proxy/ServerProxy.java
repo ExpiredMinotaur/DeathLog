@@ -16,8 +16,8 @@ public class ServerProxy extends CommonProxy
 	@Override
 	public String getLogPath() throws IOException
 	{
-	   return FMLServerHandler.instance().getSavesDirectory() + "/DeathLog/log.ser";
-
+		return FMLServerHandler.instance().getSavesDirectory()
+				+ "/DeathLog/log.ser";
 
 	}
 

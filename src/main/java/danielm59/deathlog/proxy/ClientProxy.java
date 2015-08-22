@@ -1,7 +1,6 @@
 package danielm59.deathlog.proxy;
 
 import java.io.IOException;
-import java.nio.file.Path;
 
 import net.minecraft.client.Minecraft;
 

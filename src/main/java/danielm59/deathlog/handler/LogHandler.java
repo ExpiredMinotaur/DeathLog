@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.LinkedHashMap;
 
+import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentText;
@@ -64,18 +65,58 @@ public class LogHandler
 		}
 	}
 
-	public static void LogEvent(LivingDeathEvent event)
+	public static void logEvent(LivingDeathEvent event)
 	{
-		EntityPlayer player = (EntityPlayer) event.entity;
-		String name = player.getCommandSenderName();
+		EntityPlayer playerE = (EntityPlayer) event.entity;
+		String player = playerE.getCommandSenderName();
 		String source = event.source.damageType;
-		int old = 0;
-		if (data.containsKey(name))
-		{
-			old = (Integer) data.get(name);
-		}
-		data.put(name, old + 1);
+		addDeath(player);
 		saveData();
-		MinecraftServer.getServer().getConfigurationManager().sendChatMsg(new ChatComponentText(name + " has died "+ data.get(name) + " times"));
+		tellAll(player);
 	}
+
+	public static void deathsCommand(ICommandSender sender, String player)
+	{
+		if (playerRecorded(player))
+		{
+			sender.addChatMessage(new ChatComponentText(player + " has died "
+					+ getDeaths(player) + " times"));
+		} else
+		{
+			sender.addChatMessage(new ChatComponentText(
+					"No Death record found for " + player));
+		}
+
+	}
+
+	public static int getDeaths(String player)
+	{
+		return (Integer) data.get(player);
+	}
+
+	public static boolean playerRecorded(String player)
+	{
+		return data.containsKey(player);
+	}
+
+	private static void addDeath(String player)
+	{
+		int oldCount = 0;
+		if (playerRecorded(player))
+		{
+			oldCount = getDeaths(player);
+		}
+		data.put(player, oldCount + 1);
+	}
+
+	private static void tellAll(String player)
+	{
+		MinecraftServer
+				.getServer()
+				.getConfigurationManager()
+				.sendChatMsg(
+						new ChatComponentText(player + " has died "
+								+ getDeaths(player) + " times"));
+	}
+
 }

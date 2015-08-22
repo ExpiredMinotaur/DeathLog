@@ -8,7 +8,9 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import danielm59.deathlog.commands.CommandDeathLog;
 import danielm59.deathlog.handler.ConfigurationHandler;
 import danielm59.deathlog.handler.DLEventHandler;
 import danielm59.deathlog.handler.GuiHandler;
@@ -49,6 +51,13 @@ public class DeathLog
 	{
 		LogHandler.loadData();
 		LogHelper.info("Post Initialization Complete!");
+	}
+
+	@EventHandler
+	public void serverLoad(FMLServerStartingEvent event)
+	{
+
+		event.registerServerCommand(new CommandDeathLog());
 	}
 
 }
