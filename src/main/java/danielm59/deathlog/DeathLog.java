@@ -10,11 +10,15 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import cpw.mods.fml.relauncher.Side;
 import danielm59.deathlog.commands.CommandDeathLog;
 import danielm59.deathlog.handler.ConfigurationHandler;
 import danielm59.deathlog.handler.DLEventHandler;
 import danielm59.deathlog.handler.GuiHandler;
 import danielm59.deathlog.handler.LogHandler;
+import danielm59.deathlog.handler.network.LogMessage;
+import danielm59.deathlog.handler.network.LogMessageHandler;
 import danielm59.deathlog.init.ModItems;
 import danielm59.deathlog.proxy.IProxy;
 import danielm59.deathlog.reference.Reference;
@@ -25,6 +29,7 @@ public class DeathLog
 {
 	@Mod.Instance(Reference.MODID)
 	public static DeathLog instance;
+	public static SimpleNetworkWrapper snw;
 
 	@SidedProxy(clientSide = Reference.CPROXY, serverSide = Reference.SPROXY)
 	public static IProxy proxy;
@@ -34,6 +39,9 @@ public class DeathLog
 	{
 		ConfigurationHandler.init(event.getSuggestedConfigurationFile());
 		FMLCommonHandler.instance().bus().register(new ConfigurationHandler());
+		snw = NetworkRegistry.INSTANCE.newSimpleChannel(Reference.MODID);
+		snw.registerMessage(LogMessageHandler.class, LogMessage.class, 0,
+				Side.CLIENT);
 		ModItems.init();
 		LogHelper.info("Pre Initialization Complete!");
 	}

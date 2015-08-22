@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.LinkedHashMap;
+import java.util.Set;
 
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,7 +19,7 @@ import danielm59.deathlog.utility.LogHelper;
 
 public class LogHandler
 {
-	static LinkedHashMap data = new LinkedHashMap();
+	static LinkedHashMap<String, Integer> data = new LinkedHashMap();
 
 	public static void loadData()
 	{
@@ -117,6 +118,22 @@ public class LogHandler
 				.sendChatMsg(
 						new ChatComponentText(player + " has died "
 								+ getDeaths(player) + " times"));
+	}
+
+	public static void update(LinkedHashMap newData)
+	{
+		data.clear();
+		data.putAll(newData);
+	}
+
+	public static LinkedHashMap getData()
+	{
+		return data;
+	}
+
+	public static Set<String> getPlayers()
+	{
+		return data.keySet();
 	}
 
 }

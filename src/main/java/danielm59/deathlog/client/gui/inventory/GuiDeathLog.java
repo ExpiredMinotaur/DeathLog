@@ -5,6 +5,7 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
+import danielm59.deathlog.handler.LogHandler;
 import danielm59.deathlog.reference.Reference;
 
 public class GuiDeathLog extends GuiScreen
@@ -32,6 +33,15 @@ public class GuiDeathLog extends GuiScreen
 		GL11.glColor4f(1F, 1F, 1F, 1F);
 		mc.renderEngine.bindTexture(texture);
 		drawTexturedModalRect(left, top, 0, 0, xSize, ySize);
+
+		int i = 0;
+		for (String player : LogHandler.getPlayers())
+		{
+			fontRendererObj.drawString(
+					player + " : " + LogHandler.getDeaths(player), left + 15,
+					top + 15 + 12 * i, 0x000000);
+			i++;
+		}
 		super.drawScreen(par1, par2, par3);
 	}
 
