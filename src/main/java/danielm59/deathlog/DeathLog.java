@@ -20,6 +20,7 @@ import danielm59.deathlog.handler.LogHandler;
 import danielm59.deathlog.handler.network.LogMessage;
 import danielm59.deathlog.handler.network.LogMessageHandler;
 import danielm59.deathlog.init.ModItems;
+import danielm59.deathlog.init.Recipes;
 import danielm59.deathlog.proxy.IProxy;
 import danielm59.deathlog.reference.Reference;
 import danielm59.deathlog.utility.LogHelper;
@@ -49,6 +50,7 @@ public class DeathLog
 	@EventHandler
 	public void init(FMLInitializationEvent event)
 	{
+		Recipes.init();
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
 		MinecraftForge.EVENT_BUS.register(new DLEventHandler());
 		LogHelper.info("Initialization Complete!");
