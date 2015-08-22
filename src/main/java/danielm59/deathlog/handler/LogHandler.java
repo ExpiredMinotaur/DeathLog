@@ -53,7 +53,6 @@ public class LogHandler
 				file.getParentFile().mkdirs();
 				file.createNewFile();
 			}
-			LogHelper.info(file.getAbsolutePath());
 			FileOutputStream fileOut = new FileOutputStream(file);
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 			out.writeObject(data);
