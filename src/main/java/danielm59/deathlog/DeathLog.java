@@ -59,14 +59,13 @@ public class DeathLog
 	@EventHandler
 	public void PostInit(FMLPostInitializationEvent event)
 	{
-		LogHandler.loadData();
 		LogHelper.info("Post Initialization Complete!");
 	}
 
 	@EventHandler
 	public void serverLoad(FMLServerStartingEvent event)
 	{
-
+		LogHandler.loadData();
 		event.registerServerCommand(new CommandDeathLog());
 	}
 
