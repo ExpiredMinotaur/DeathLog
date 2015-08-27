@@ -15,6 +15,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import danielm59.deathlog.DeathLog;
+import danielm59.deathlog.utility.LocalHelper;
 import danielm59.deathlog.utility.LogHelper;
 
 public class LogHandler
@@ -79,12 +80,15 @@ public class LogHandler
 	{
 		if (playerRecorded(player))
 		{
-			sender.addChatMessage(new ChatComponentText(player + " has died "
-					+ getDeaths(player) + " times"));
+			sender.addChatMessage(new ChatComponentText(String.format(
+					LocalHelper.getLocalString("deathmessage"),
+					player, getDeaths(player))));
 		} else
 		{
 			sender.addChatMessage(new ChatComponentText(
-					"No Death record found for " + player));
+					String.format(
+							LocalHelper.getLocalString("nodatamessage"),
+							player)));
 		}
 
 	}
@@ -115,8 +119,9 @@ public class LogHandler
 				.getServer()
 				.getConfigurationManager()
 				.sendChatMsg(
-						new ChatComponentText(player + " has died "
-								+ getDeaths(player) + " times"));
+						new ChatComponentText(String.format(
+								LocalHelper.getLocalString("deathmessage"),
+								player, getDeaths(player))));
 	}
 
 	public static void update(LinkedHashMap newData)

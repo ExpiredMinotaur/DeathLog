@@ -1,1 +1,4 @@
 item.deathlog:deathlog.name=Death Log
+
+string.deathlog:deathmessage.string=%s has died %d times
+string.deathlog:nodatamessage.string=No Death record found for %s
