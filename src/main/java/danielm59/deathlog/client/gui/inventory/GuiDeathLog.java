@@ -34,12 +34,17 @@ public class GuiDeathLog extends GuiScreen
 		mc.renderEngine.bindTexture(texture);
 		drawTexturedModalRect(left, top, 0, 0, xSize, ySize);
 
-		int i = 0;
+		String title = "Death Log";
+		fontRendererObj.drawString(title,
+				left + xSize / 2 - fontRendererObj.getStringWidth(title) / 2,
+				top + 12, 0x000000);
+
+		int i = 1;
 		for (String player : LogHandler.getPlayers())
 		{
 			fontRendererObj.drawString(
 					player + " : " + LogHandler.getDeaths(player), left + 15,
-					top + 15 + 12 * i, 0x000000);
+					top + 12 + (12 * i), 0x000000);
 			i++;
 		}
 		super.drawScreen(par1, par2, par3);
