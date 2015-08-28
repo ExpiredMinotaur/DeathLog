@@ -6,7 +6,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import net.minecraft.command.ICommandSender;
@@ -81,14 +87,12 @@ public class LogHandler
 		if (playerRecorded(player))
 		{
 			sender.addChatMessage(new ChatComponentText(String.format(
-					LocalHelper.getLocalString("deathmessage"),
-					player, getDeaths(player))));
+					LocalHelper.getLocalString("deathmessage"), player,
+					getDeaths(player))));
 		} else
 		{
-			sender.addChatMessage(new ChatComponentText(
-					String.format(
-							LocalHelper.getLocalString("nodatamessage"),
-							player)));
+			sender.addChatMessage(new ChatComponentText(String.format(
+					LocalHelper.getLocalString("nodatamessage"), player)));
 		}
 
 	}
@@ -137,7 +141,31 @@ public class LogHandler
 
 	public static Set<String> getPlayers()
 	{
-		return data.keySet();
+		LinkedHashMap<String,Integer> sortedData = sort(data);
+		return sortedData.keySet();
 	}
 
+	public static <K extends Comparable, V extends Comparable> LinkedHashMap<K, V> sort(
+			Map<K, V> map)
+	{
+		List<Map.Entry<K, V>> entries = new LinkedList<Map.Entry<K, V>>(
+				map.entrySet());
+
+		 Collections.sort(entries, new Comparator<Map.Entry<K, V>>()
+		{
+
+			@Override
+			public int compare(Entry<K, V> o1, Entry<K, V> o2)
+			{
+				return o2.getValue().compareTo(o1.getValue());
+			}
+		});
+	        LinkedHashMap<K,V> sortedMap = new LinkedHashMap<K,V>();
+	        
+	         for(Map.Entry<K,V> entry: entries){
+	             sortedMap.put(entry.getKey(), entry.getValue());
+	         }
+	       
+	         return sortedMap;
+	}
 }
