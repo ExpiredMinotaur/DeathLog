@@ -15,14 +15,14 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import danielm59.deathlog.DeathLog;
+import danielm59.deathlog.utility.LocalHelper;
+import danielm59.deathlog.utility.LogHelper;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import danielm59.deathlog.DeathLog;
-import danielm59.deathlog.utility.LocalHelper;
-import danielm59.deathlog.utility.LogHelper;
 
 public class LogHandler
 {
@@ -86,9 +86,9 @@ public class LogHandler
 	{
 		if (playerRecorded(player))
 		{
-			sender.addChatMessage(new ChatComponentText(String.format(
-					LocalHelper.getLocalString("deathmessage"), player,
-					getDeaths(player))));
+			sender.addChatMessage(new ChatComponentText(
+					String.format(LocalHelper.getLocalString("deathmessage"),
+							player, getDeaths(player))));
 		} else
 		{
 			sender.addChatMessage(new ChatComponentText(String.format(
@@ -119,13 +119,10 @@ public class LogHandler
 
 	private static void tellAll(String player)
 	{
-		MinecraftServer
-				.getServer()
-				.getConfigurationManager()
-				.sendChatMsg(
-						new ChatComponentText(String.format(
-								LocalHelper.getLocalString("deathmessage"),
-								player, getDeaths(player))));
+		MinecraftServer.getServer().getConfigurationManager()
+				.sendChatMsg(new ChatComponentText(String.format(
+						LocalHelper.getLocalString("deathmessage"), player,
+						getDeaths(player))));
 	}
 
 	public static void update(LinkedHashMap newData)
@@ -141,7 +138,7 @@ public class LogHandler
 
 	public static Set<String> getPlayers()
 	{
-		LinkedHashMap<String,Integer> sortedData = sort(data);
+		LinkedHashMap<String, Integer> sortedData = sort(data);
 		return sortedData.keySet();
 	}
 
@@ -151,21 +148,27 @@ public class LogHandler
 		List<Map.Entry<K, V>> entries = new LinkedList<Map.Entry<K, V>>(
 				map.entrySet());
 
-		 Collections.sort(entries, new Comparator<Map.Entry<K, V>>()
+		Collections.sort(entries, new Comparator<Map.Entry<K, V>>()
 		{
 
 			@Override
 			public int compare(Entry<K, V> o1, Entry<K, V> o2)
 			{
-				return o2.getValue().compareTo(o1.getValue());
+				int c = o2.getValue().compareTo(o1.getValue());
+				if (c == 0)
+				{
+					c = o1.getKey().compareTo(o2.getKey());
+				}
+				return c;
 			}
 		});
-	        LinkedHashMap<K,V> sortedMap = new LinkedHashMap<K,V>();
-	        
-	         for(Map.Entry<K,V> entry: entries){
-	             sortedMap.put(entry.getKey(), entry.getValue());
-	         }
-	       
-	         return sortedMap;
+		LinkedHashMap<K, V> sortedMap = new LinkedHashMap<K, V>();
+
+		for (Map.Entry<K, V> entry : entries)
+		{
+			sortedMap.put(entry.getKey(), entry.getValue());
+		}
+
+		return sortedMap;
 	}
 }
