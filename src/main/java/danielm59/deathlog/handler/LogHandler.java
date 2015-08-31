@@ -171,4 +171,9 @@ public class LogHandler
 
 		return sortedMap;
 	}
+	
+	public static void registerPlayer(String player)
+	{
+		data.put(player, 0);
+	}
 }
