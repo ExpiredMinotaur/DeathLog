@@ -1,11 +1,6 @@
 package danielm59.deathlog.handler;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
@@ -15,14 +10,15 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import danielm59.deathlog.DeathLog;
-import danielm59.deathlog.utility.LocalHelper;
-import danielm59.deathlog.utility.LogHelper;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import danielm59.deathlog.DeathLog;
+import danielm59.deathlog.utility.IOHelper;
+import danielm59.deathlog.utility.LocalHelper;
+import danielm59.deathlog.utility.LogHelper;
 
 public class LogHandler
 {
@@ -30,23 +26,13 @@ public class LogHandler
 
 	public static void loadData()
 	{
+		try
 		{
-			try
-			{
-				FileInputStream fileIn = new FileInputStream(
-						DeathLog.proxy.getLogPath());
-				ObjectInputStream in = new ObjectInputStream(fileIn);
-				data = (LinkedHashMap) in.readObject();
-				in.close();
-				fileIn.close();
-			} catch (IOException i)
-			{
-				i.printStackTrace();
-				return;
-			} catch (ClassNotFoundException c)
-			{
-				LogHelper.info("No DeathLog Data Found");
-			}
+			data = (LinkedHashMap<String, Integer>) IOHelper
+					.readObject(DeathLog.proxy.getLogPath());
+		} catch (IOException e)
+		{
+			LogHelper.info("Death data not found");
 		}
 	}
 
@@ -54,21 +40,10 @@ public class LogHandler
 	{
 		try
 		{
-			File file = new File(DeathLog.proxy.getLogPath());
-			if (!file.exists())
-			{
-				file.getParentFile().mkdirs();
-				file.createNewFile();
-			}
-			FileOutputStream fileOut = new FileOutputStream(file);
-			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-			out.writeObject(data);
-			out.close();
-			fileOut.close();
-			LogHelper.info("Saved Death Data");
-		} catch (IOException i)
+			IOHelper.writeObject(DeathLog.proxy.getLogPath(), data);
+		} catch (IOException e)
 		{
-			i.printStackTrace();
+			LogHelper.info("Death data failed to save");
 		}
 	}
 
@@ -86,9 +61,9 @@ public class LogHandler
 	{
 		if (playerRecorded(player))
 		{
-			sender.addChatMessage(new ChatComponentText(
-					String.format(LocalHelper.getLocalString("deathmessage"),
-							player, getDeaths(player))));
+			sender.addChatMessage(new ChatComponentText(String.format(
+					LocalHelper.getLocalString("deathmessage"), player,
+					getDeaths(player))));
 		} else
 		{
 			sender.addChatMessage(new ChatComponentText(String.format(
@@ -119,10 +94,13 @@ public class LogHandler
 
 	private static void tellAll(String player)
 	{
-		MinecraftServer.getServer().getConfigurationManager()
-				.sendChatMsg(new ChatComponentText(String.format(
-						LocalHelper.getLocalString("deathmessage"), player,
-						getDeaths(player))));
+		MinecraftServer
+				.getServer()
+				.getConfigurationManager()
+				.sendChatMsg(
+						new ChatComponentText(String.format(
+								LocalHelper.getLocalString("deathmessage"),
+								player, getDeaths(player))));
 	}
 
 	public static void update(LinkedHashMap newData)
@@ -171,7 +149,7 @@ public class LogHandler
 
 		return sortedMap;
 	}
-	
+
 	public static void registerPlayer(String player)
 	{
 		data.put(player, 0);

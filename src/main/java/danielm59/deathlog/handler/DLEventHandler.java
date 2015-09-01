@@ -1,9 +1,9 @@
 package danielm59.deathlog.handler;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class DLEventHandler
 {
@@ -23,9 +23,9 @@ public class DLEventHandler
 			}
 		}
 	}
-	
+
 	@SubscribeEvent
-	public void onEntityJoinWorldEvent (EntityJoinWorldEvent event)
+	public void onEntityJoinWorldEvent(EntityJoinWorldEvent event)
 	{
 		if (!event.world.isRemote)
 		{
@@ -33,7 +33,7 @@ public class DLEventHandler
 			{
 				EntityPlayer playerE = (EntityPlayer) event.entity;
 				String player = playerE.getCommandSenderName();
-				if(!LogHandler.playerRecorded(player))
+				if (!LogHandler.playerRecorded(player))
 				{
 					LogHandler.registerPlayer(player);
 				}
