@@ -1,13 +1,7 @@
 package danielm59.deathlog.handler;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import net.minecraft.command.ICommandSender;
@@ -19,6 +13,7 @@ import danielm59.deathlog.DeathLog;
 import danielm59.deathlog.utility.IOHelper;
 import danielm59.deathlog.utility.LocalHelper;
 import danielm59.deathlog.utility.LogHelper;
+import danielm59.deathlog.utility.SortHelper;
 
 public class LogHandler
 {
@@ -116,38 +111,8 @@ public class LogHandler
 
 	public static Set<String> getPlayers()
 	{
-		LinkedHashMap<String, Integer> sortedData = sort(data);
+		LinkedHashMap<String, Integer> sortedData = SortHelper.sort(data);
 		return sortedData.keySet();
-	}
-
-	public static <K extends Comparable, V extends Comparable> LinkedHashMap<K, V> sort(
-			Map<K, V> map)
-	{
-		List<Map.Entry<K, V>> entries = new LinkedList<Map.Entry<K, V>>(
-				map.entrySet());
-
-		Collections.sort(entries, new Comparator<Map.Entry<K, V>>()
-		{
-
-			@Override
-			public int compare(Entry<K, V> o1, Entry<K, V> o2)
-			{
-				int c = o2.getValue().compareTo(o1.getValue());
-				if (c == 0)
-				{
-					c = o1.getKey().compareTo(o2.getKey());
-				}
-				return c;
-			}
-		});
-		LinkedHashMap<K, V> sortedMap = new LinkedHashMap<K, V>();
-
-		for (Map.Entry<K, V> entry : entries)
-		{
-			sortedMap.put(entry.getKey(), entry.getValue());
-		}
-
-		return sortedMap;
 	}
 
 	public static void registerPlayer(String player)
