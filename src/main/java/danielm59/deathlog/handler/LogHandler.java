@@ -69,7 +69,7 @@ public class LogHandler
 
 	public static int getDeaths(String player)
 	{
-		return (Integer) data.get(player);
+		return data.get(player);
 	}
 
 	public static boolean playerRecorded(String player)
