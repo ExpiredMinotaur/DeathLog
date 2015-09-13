@@ -29,6 +29,8 @@ public class LogHandler
 		{
 			LogHelper.info("Death data not found");
 		}
+		if (data == null)
+			data = new LinkedHashMap();
 	}
 
 	private static void saveData()
