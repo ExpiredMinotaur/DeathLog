@@ -9,25 +9,17 @@ import java.io.ObjectOutputStream;
 
 public class IOHelper
 {
-	public static Object readObject(String filename)
+	public static Object readObject(String filename) throws IOException,
+			ClassNotFoundException
 	{
-		try
-		{
-			FileInputStream fileIn = new FileInputStream(filename);
-			ObjectInputStream in = new ObjectInputStream(fileIn);
-			Object data = in.readObject();
-			in.close();
-			fileIn.close();
-			return data;
-		} catch (IOException i)
-		{
-			i.printStackTrace();
-			return null;
-		} catch (ClassNotFoundException c)
-		{
-			c.printStackTrace();
-			return null;
-		}
+
+		FileInputStream fileIn = new FileInputStream(filename);
+		ObjectInputStream in = new ObjectInputStream(fileIn);
+		Object data = in.readObject();
+		in.close();
+		fileIn.close();
+		return data;
+
 	}
 
 	public static void writeObject(String filename, Object data)

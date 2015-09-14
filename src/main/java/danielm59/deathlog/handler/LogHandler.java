@@ -28,9 +28,11 @@ public class LogHandler
 		} catch (IOException e)
 		{
 			LogHelper.info("Death data not found");
+		} catch (ClassNotFoundException e)
+		{
+			LogHelper.info("Death data not found");
 		}
-		if (data == null)
-			data = new LinkedHashMap();
+
 	}
 
 	private static void saveData()
@@ -120,5 +122,6 @@ public class LogHandler
 	public static void registerPlayer(String player)
 	{
 		data.put(player, 0);
+		saveData();
 	}
 }
