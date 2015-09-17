@@ -20,6 +20,6 @@ public class ServerProxy extends CommonProxy
 		MinecraftServer server = FMLServerHandler.instance().getServer();
 		String worldName = (server != null) ? server.getFolderName() : "world";
 		return FMLServerHandler.instance().getSavesDirectory() + "/"
-				+ worldName + "/DeathLog/log.ser";
+				+ worldName + "/DeathLog/log.dat";
 	}
 }

@@ -54,7 +54,7 @@ public class GuiDeathLog extends GuiScreen
 
 		case COUNT:
 			int i = 1;
-			for (String player : LogHandler.getPlayers())
+			for (String player : LogHandler.getPlayers("COUNT"))
 			{
 				fontRendererObj.drawString(
 						player + " : " + LogHandler.getDeaths(player),
@@ -97,7 +97,7 @@ public class GuiDeathLog extends GuiScreen
 			buttonList.clear();
 			buttonList.add(new GuiButton(0, left + 18, top + 24, 110, 20,
 					"Death Count"));
-
+			break;
 		}
 	}
 

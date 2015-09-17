@@ -22,7 +22,7 @@ public class ClientProxy extends CommonProxy
 		String worldName = (server != null) ? server.getFolderName() : "world";
 
 		return Minecraft.getMinecraft().mcDataDir + "/saves/" + worldName
-				+ "/DeathLog/log.ser";
+				+ "/DeathLog/log.dat";
 	}
 
 }

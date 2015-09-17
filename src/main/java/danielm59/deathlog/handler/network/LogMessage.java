@@ -10,7 +10,7 @@ import cpw.mods.fml.common.network.simpleimpl.IMessage;
 public class LogMessage implements IMessage
 {
 
-	LinkedHashMap<String, Integer> toSend = new LinkedHashMap();
+	LinkedHashMap<String, LinkedHashMap<String, Integer>> toSend = new LinkedHashMap();
 
 	public LogMessage()
 	{
@@ -25,25 +25,37 @@ public class LogMessage implements IMessage
 	@Override
 	public void toBytes(ByteBuf buf)
 	{
-		int size = toSend.size();
-		buf.writeInt(size);
+		buf.writeInt(toSend.size());
 		for (String key : toSend.keySet())
 		{
 			ByteBufUtils.writeUTF8String(buf, key);
-			buf.writeInt(toSend.get(key));
+			LinkedHashMap<String, Integer> playerData = toSend.get(key);
+			buf.writeInt(playerData.size());
+			for (String key2 : playerData.keySet())
+			{
+				ByteBufUtils.writeUTF8String(buf, key2);
+				buf.writeInt(playerData.get(key2));
+			}
 		}
 	}
 
 	@Override
 	public void fromBytes(ByteBuf buf)
 	{
+		LinkedHashMap<String, Integer> playerData = new LinkedHashMap();
 		toSend.clear();
 		int size = buf.readInt();
 		for (int i = 0; i < size; i++)
 		{
-			String name = ByteBufUtils.readUTF8String(buf);
-			int deaths = buf.readInt();
-			toSend.put(name, deaths);
+			String player = ByteBufUtils.readUTF8String(buf);
+			toSend.put(player, playerData);
+			int size2 = buf.readInt();
+			for (int j = 0; j < size; j++)
+			{
+				String type = ByteBufUtils.readUTF8String(buf);
+				int count = buf.readInt();
+				toSend.get(player).put(type, count);
+			}
 		}
 	}
 

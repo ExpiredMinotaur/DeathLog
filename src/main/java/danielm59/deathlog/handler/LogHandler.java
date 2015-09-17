@@ -17,13 +17,13 @@ import danielm59.deathlog.utility.SortHelper;
 
 public class LogHandler
 {
-	static LinkedHashMap<String, Integer> data = new LinkedHashMap();
+	static LinkedHashMap<String, LinkedHashMap<String,Integer>> data = new LinkedHashMap();
 
 	public static void loadData()
 	{
 		try
 		{
-			data = (LinkedHashMap<String, Integer>) IOHelper
+			data = (LinkedHashMap<String, LinkedHashMap<String, Integer>>) IOHelper
 					.readObject(DeathLog.proxy.getLogPath());
 		} catch (IOException e)
 		{
@@ -73,7 +73,7 @@ public class LogHandler
 
 	public static int getDeaths(String player)
 	{
-		return data.get(player);
+		return data.get(player).get("COUNT");
 	}
 
 	public static boolean playerRecorded(String player)
@@ -88,7 +88,7 @@ public class LogHandler
 		{
 			oldCount = getDeaths(player);
 		}
-		data.put(player, oldCount + 1);
+		data.get(player).put("COUNT", oldCount + 1);
 	}
 
 	private static void tellAll(String player)
@@ -113,15 +113,22 @@ public class LogHandler
 		return data;
 	}
 
-	public static Set<String> getPlayers()
-	{
-		LinkedHashMap<String, Integer> sortedData = SortHelper.sort(data);
+	public static Set<String> getPlayers(String type)
+	{		
+		LinkedHashMap<String,Integer> sortData = new LinkedHashMap();
+		for(String key :data.keySet())
+		{
+			sortData.put(key, data.get(key).get(type));
+		}
+		LinkedHashMap<String, Integer> sortedData = SortHelper.sort(sortData);
 		return sortedData.keySet();
 	}
 
 	public static void registerPlayer(String player)
 	{
-		data.put(player, 0);
+		LinkedHashMap<String, Integer> entry =  new LinkedHashMap();
+		entry.put("COUNT", 0);
+		data.put(player, entry);
 		saveData();
 	}
 }
