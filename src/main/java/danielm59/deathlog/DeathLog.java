@@ -68,5 +68,4 @@ public class DeathLog
 		LogHandler.loadData();
 		event.registerServerCommand(new CommandDeathLog());
 	}
-
 }

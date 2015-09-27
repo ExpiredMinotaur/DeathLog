@@ -2,3 +2,20 @@ item.deathlog:deathlog.name=Death Log
 
 string.deathlog:deathmessage.string=%s has died %d times
 string.deathlog:nodatamessage.string=%s has not been on the server
+
+string.deathlog:TYPE:outOfWorld.string=Fell out of World
+string.deathlog:TYPE:mob.string=Mob
+string.deathlog:TYPE:fall.string=Fell from Height
+string.deathlog:TYPE:inFire.string=In Fire
+string.deathlog:TYPE:onFire.string=On Fire
+string.deathlog:TYPE:lava.string=In Lava
+string.deathlog:TYPE:inWall.string=Suffocated
+string.deathlog:TYPE:drown.string=Drowned
+string.deathlog:TYPE:starve.string=Starved
+string.deathlog:TYPE:cactus.string=Cactus
+string.deathlog:TYPE:generic.string=Other
+string.deathlog:TYPE:magic.string=Magic
+string.deathlog:TYPE:wither.string=Wither
+string.deathlog:TYPE:anvil.string=Falling Anvil
+string.deathlog:TYPE:fallingBlock.string=Falling Block
+string.deathlog:TYPE:player.string=Player

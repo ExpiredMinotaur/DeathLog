@@ -33,7 +33,7 @@ public class DLEventHandler
 			{
 				EntityPlayer playerE = (EntityPlayer) event.entity;
 				String player = playerE.getCommandSenderName();
-				if (!LogHandler.playerRecorded(player))
+				if (!LogHandler.statRecorded(player, "COUNT"))
 				{
 					LogHandler.registerPlayer(player);
 				}

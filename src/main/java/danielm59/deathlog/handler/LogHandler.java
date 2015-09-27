@@ -1,10 +1,12 @@
 package danielm59.deathlog.handler;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
 import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentText;
@@ -17,7 +19,7 @@ import danielm59.deathlog.utility.SortHelper;
 
 public class LogHandler
 {
-	static LinkedHashMap<String, LinkedHashMap<String,Integer>> data = new LinkedHashMap();
+	static LinkedHashMap<String, LinkedHashMap<String, Integer>> data = new LinkedHashMap<String, LinkedHashMap<String, Integer>>();
 
 	public static void loadData()
 	{
@@ -32,7 +34,6 @@ public class LogHandler
 		{
 			LogHelper.info("Death data not found");
 		}
-
 	}
 
 	private static void saveData()
@@ -50,45 +51,63 @@ public class LogHandler
 	{
 		EntityPlayer playerE = (EntityPlayer) event.entity;
 		String player = playerE.getCommandSenderName();
-		String source = event.source.damageType;
-		addDeath(player);
+		String damageType = event.source.getDamageType();
+		addDeath(player, String.format("TYPE:%s", damageType));
+		if (damageType == "mob")
+		{
+			Entity entity = event.source.getSourceOfDamage();
+			String entityName = LocalHelper.getLocalEntityName(entity);
+			addDeath(player, String.format("MOB:%s", entityName));
+		}
+		addDeath(player, "COUNT");
+		;
 		saveData();
 		tellAll(player);
 	}
 
 	public static void deathsCommand(ICommandSender sender, String player)
 	{
-		if (playerRecorded(player))
+		if (statRecorded(player, "COUNT"))
 		{
 			sender.addChatMessage(new ChatComponentText(String.format(
 					LocalHelper.getLocalString("deathmessage"), player,
-					getDeaths(player))));
+					getDeaths(player, "COUNT"))));
 		} else
 		{
 			sender.addChatMessage(new ChatComponentText(String.format(
 					LocalHelper.getLocalString("nodatamessage"), player)));
 		}
-
 	}
 
-	public static int getDeaths(String player)
+	public static int getDeaths(String player, String stat)
 	{
-		return data.get(player).get("COUNT");
+		if (data.get(player).containsKey(stat))
+		{
+			return data.get(player).get(stat);
+		}
+		return 0;
 	}
 
-	public static boolean playerRecorded(String player)
+	public static boolean statRecorded(String player, String stat)
 	{
-		return data.containsKey(player);
+		if (data.containsKey(player))
+		{
+			return data.get(player).containsKey(stat);
+		}
+		return false;
 	}
 
-	private static void addDeath(String player)
+	private static void addDeath(String player, String stat)
 	{
 		int oldCount = 0;
-		if (playerRecorded(player))
+		LinkedHashMap<String, Integer> playerData = new LinkedHashMap<String, Integer>();
+		playerData = (LinkedHashMap<String, Integer>) data.get(player).clone();
+		if (statRecorded(player, stat))
 		{
-			oldCount = getDeaths(player);
+			oldCount = playerData.get(stat);
 		}
-		data.get(player).put("COUNT", oldCount + 1);
+		playerData.put(stat, oldCount + 1);
+		data.put(player, playerData);
 	}
 
 	private static void tellAll(String player)
@@ -99,7 +118,7 @@ public class LogHandler
 				.sendChatMsg(
 						new ChatComponentText(String.format(
 								LocalHelper.getLocalString("deathmessage"),
-								player, getDeaths(player))));
+								player, getDeaths(player, "COUNT"))));
 	}
 
 	public static void update(LinkedHashMap newData)
@@ -114,11 +133,17 @@ public class LogHandler
 	}
 
 	public static Set<String> getPlayers(String type)
-	{		
-		LinkedHashMap<String,Integer> sortData = new LinkedHashMap();
-		for(String key :data.keySet())
+	{
+		LinkedHashMap<String, Integer> sortData = new LinkedHashMap();
+		for (String key : data.keySet())
 		{
-			sortData.put(key, data.get(key).get(type));
+			if (data.get(key).containsKey(type))
+			{
+				sortData.put(key, data.get(key).get(type));
+			} else
+			{
+				sortData.put(key, 0);
+			}
 		}
 		LinkedHashMap<String, Integer> sortedData = SortHelper.sort(sortData);
 		return sortedData.keySet();
@@ -126,9 +151,27 @@ public class LogHandler
 
 	public static void registerPlayer(String player)
 	{
-		LinkedHashMap<String, Integer> entry =  new LinkedHashMap();
+		LinkedHashMap<String, Integer> entry = new LinkedHashMap();
 		entry.put("COUNT", 0);
 		data.put(player, entry);
 		saveData();
 	}
+
+	public static Set<String> getDeathTypes()
+	{
+		Set<String> types = new HashSet<String>();
+		for (String player : getPlayers("COUNT"))
+		{
+			for (String record : data.get(player).keySet())
+			{
+				if (record.substring(0, Math.min(record.length(), 5))
+						.compareTo("TYPE:") == 0)
+				{
+					types.add(record);
+				}
+			}
+		}
+		return types;
+	}
+
 }

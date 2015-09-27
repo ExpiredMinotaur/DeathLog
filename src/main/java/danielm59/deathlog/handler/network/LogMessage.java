@@ -9,7 +9,6 @@ import cpw.mods.fml.common.network.simpleimpl.IMessage;
 
 public class LogMessage implements IMessage
 {
-
 	LinkedHashMap<String, LinkedHashMap<String, Integer>> toSend = new LinkedHashMap();
 
 	public LogMessage()
@@ -42,21 +41,20 @@ public class LogMessage implements IMessage
 	@Override
 	public void fromBytes(ByteBuf buf)
 	{
-		LinkedHashMap<String, Integer> playerData = new LinkedHashMap();
 		toSend.clear();
 		int size = buf.readInt();
 		for (int i = 0; i < size; i++)
 		{
 			String player = ByteBufUtils.readUTF8String(buf);
-			toSend.put(player, playerData);
+			LinkedHashMap<String, Integer> playerData = new LinkedHashMap();
 			int size2 = buf.readInt();
-			for (int j = 0; j < size; j++)
+			for (int j = 0; j < size2; j++)
 			{
 				String type = ByteBufUtils.readUTF8String(buf);
 				int count = buf.readInt();
-				toSend.get(player).put(type, count);
+				playerData.put(type, count);
 			}
+			toSend.put(player, playerData);
 		}
 	}
-
 }
