@@ -9,31 +9,15 @@ public class LocalHelper
 {
 	public static String getLocalString(String string)
 	{
-		String stringL = String.format("string.%s:%s.string", Reference.MODID,
-				string);
-		if (StatCollector.canTranslate(string))
-		{
-			return StatCollector.translateToLocal(stringL);
-		} else
-		{
-			LogHelper.error(String.format("Translation not found for: %s",
-					stringL));
-			return string;
-		}
+		string = String.format("string.%s:%s.string", Reference.MODID, string);
+		return StatCollector.translateToLocal(string);
 	}
 
 	public static String getLocalEntityName(Entity entity)
 	{
 		String entityName = String.format("entity.%s.name",
 				EntityList.getEntityString(entity));
-		if (StatCollector.canTranslate(entityName))
-		{
-			return StatCollector.translateToLocal(entityName);
-		} else
-		{
-			LogHelper.error(String.format("Translation not found for: %s",
-					entityName));
-			return EntityList.getEntityString(entity);
-		}
+		return StatCollector.translateToLocal(entityName);
 	}
+
 }
