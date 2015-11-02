@@ -11,6 +11,7 @@ public class GuiStateCount extends BaseGuiState
 	public GuiStateCount(GuiDeathLog log)
 	{
 		super(log);
+		name = "Death Count";
 	}
 
 	@Override
@@ -27,10 +28,10 @@ public class GuiStateCount extends BaseGuiState
 	}
 
 	@Override
-	protected void addButtons()
+	public void addButtons()
 	{
-		log.addButton(new GuiButton(0, log.getLeft() + 18, log.getTop() + 145,
-				110, 20, "Back"));
+		log.addButton(new GuiButton(0, log.getLeft() + 22, log.getTop() + 160,
+				120, 20, "Back"));
 	}
 
 	@Override
@@ -48,6 +49,13 @@ public class GuiStateCount extends BaseGuiState
 	public void init()
 	{
 		page = 1;
+		addButtons();
+	}
+	
+	@Override
+	public void init(int page)
+	{
+		this.page = page;
 		addButtons();
 	}
 }

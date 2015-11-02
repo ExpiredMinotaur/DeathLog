@@ -1,7 +1,9 @@
 package danielm59.deathlog.client.gui.log;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import net.minecraft.client.gui.FontRenderer;
@@ -35,11 +37,14 @@ public class GuiDeathLog extends GuiScreen
 	private Boolean stateLoaded = false;
 
 	private String title = "Death Log";
-	public Set<String> deathTypes = new HashSet<String>();
+	public ArrayList<String> deathTypes;
 
-	private int xSize = 146;
-	private int ySize = 180;
+	float scale = 1.3F;
+	private int xSize = (int) (scale * 512 / 2);
+	private int ySize = (int) (scale * 316 / 2);
 	private int left, top;
+
+	private boolean initData = true;
 
 	@Override
 	public final void initGui()
@@ -48,8 +53,12 @@ public class GuiDeathLog extends GuiScreen
 		left = width / 2 - xSize / 2;
 		top = height / 2 - ySize / 2;
 		deathTypes = LogHandler.getDeathTypes();
-		initStates();
-		state = states.get(LogGuiStates.MENU);
+		if (initData)
+		{
+			initData = false;
+			initStates();
+			state = states.get(LogGuiStates.MENU);	
+		}
 		state.init();
 		stateLoaded = true;
 	}
@@ -61,13 +70,13 @@ public class GuiDeathLog extends GuiScreen
 		states.put(LogGuiStates.TYPE_MENU, new GuiStateTypeMenu(log));
 		states.put(LogGuiStates.TYPE, new GuiStateType(log));
 	}
-	
+
 	@Override
 	public void drawScreen(int par1, int par2, float par3)
 	{
 		GL11.glColor4f(1F, 1F, 1F, 1F);
 		mc.renderEngine.bindTexture(texture);
-		drawTexturedModalRect(left, top, 0, 0, xSize, ySize);
+		func_146110_a(left, top, 0, 0, xSize, ySize, 256 * scale, 256 * scale);
 		if (!stateLoaded)
 		{
 			state.init();
@@ -75,7 +84,10 @@ public class GuiDeathLog extends GuiScreen
 		}
 		state.drawText();
 		fontRendererObj.drawString(title,
-				left + xSize / 2 - fontRendererObj.getStringWidth(title) / 2,
+				left + xSize / 4 - fontRendererObj.getStringWidth(title) / 2,
+				top + 12, 0x000000);
+		fontRendererObj.drawString(state.getName(), left + 3 * xSize / 4
+				- fontRendererObj.getStringWidth(state.getName()) / 2,
 				top + 12, 0x000000);
 		super.drawScreen(par1, par2, par3);
 	}
@@ -91,10 +103,40 @@ public class GuiDeathLog extends GuiScreen
 	{
 		state.buttonClick(button.id);
 	}
+	
+	@Override
+	public void onGuiClosed() 
+	{
+		state = states.get(LogGuiStates.MENU);	
+	}
 
 	public void addButton(GuiButton button)
 	{
 		buttonList.add(button);
+	}
+	
+	public void disableButton(int id)
+	{
+        for (int k = 0; k < this.buttonList.size(); ++k)
+        {
+            GuiButton button = (GuiButton)this.buttonList.get(k);
+            if(button.id == id)
+            {
+            	button.enabled = false;
+            }
+        }
+	}
+	
+	public void enableButton(int id)
+	{
+        for (int k = 0; k < this.buttonList.size(); ++k)
+        {
+            GuiButton button = (GuiButton)this.buttonList.get(k);
+            if(button.id == id)
+            {
+            	button.enabled = true;
+            }
+        }
 	}
 
 	public FontRenderer font()
@@ -118,15 +160,21 @@ public class GuiDeathLog extends GuiScreen
 		buttonList.clear();
 		stateLoaded = false;
 	}
+	
+	public void loadPage(int page)
+	{
+		buttonList.clear();
+		state.init(page);
+
+	}
 
 	public void setDeathType(String type)
 	{
 		deathType = type;
 	}
-	
+
 	public String getDeathType()
 	{
 		return deathType;
 	}
-
 }

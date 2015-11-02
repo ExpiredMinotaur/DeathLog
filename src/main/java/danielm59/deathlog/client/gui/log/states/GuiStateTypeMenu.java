@@ -11,6 +11,7 @@ public class GuiStateTypeMenu extends BaseGuiState
 	public GuiStateTypeMenu(GuiDeathLog log)
 	{
 		super(log);
+		name = "Death Types";
 	}
 
 	@Override
@@ -21,15 +22,32 @@ public class GuiStateTypeMenu extends BaseGuiState
 	@Override
 	protected void addButtons()
 	{
-		log.addButton(new GuiButton(0, log.getLeft() + 18, log.getTop() + 145,
-				110, 20, "Back"));
-		int i = 1;
-		for (String type : log.deathTypes)
+		log.addButton(new GuiButton(0, log.getLeft() + 22, log.getTop() + 160,
+				120, 20, "Back"));
+		log.addButton(new GuiButton(1, log.getLeft() + 190, log.getTop() + 160,
+				120, 20, "Next"));
+		if (log.deathTypes.size() <= 12 * page)
 		{
-			String buttonName = LocalHelper.getLocalString(type);
-			log.addButton(new GuiButton(i, log.getLeft() + 18, log.getTop() + 24
-					+ (22 * (i-1)), 110, 20, buttonName));
-			i++;
+			log.disableButton(1);
+		} else
+		{
+			log.enableButton(1);
+		}
+		for (int i = 0; i < Math.min(12,log.deathTypes.size()-(page-1)*12); i++)
+		{
+			if (i < 6)
+			{
+				String buttonName = LocalHelper.getLocalString(log.deathTypes
+						.get(i + 12 * (page - 1)));
+				log.addButton(new GuiButton(i+2, log.getLeft() + 22, log.getTop()
+						+ 24 + (22 * i), 120, 20, buttonName));
+			} else
+			{
+				String buttonName = LocalHelper.getLocalString(log.deathTypes
+						.get(i + 12 * (page - 1)));
+				log.addButton(new GuiButton(i+2, log.getLeft() + 190, log
+						.getTop() + 24 + (22 * (i - 6)), 120, 20, buttonName));
+			}
 		}
 	}
 
@@ -39,11 +57,21 @@ public class GuiStateTypeMenu extends BaseGuiState
 		switch (buttonID)
 		{
 		case 0:
-			log.SetGuiState(LogGuiStates.MENU);
+			if (page > 1)
+			{
+				log.loadPage(--page);
+			} else
+			{
+				log.SetGuiState(LogGuiStates.MENU);
+			}
+			break;
+		case 1:
+			log.loadPage(++page);
 			break;
 		default:
 			log.SetGuiState(LogGuiStates.TYPE);
-			log.setDeathType((String) log.deathTypes.toArray()[buttonID-1]);
+			log.setDeathType((String) log.deathTypes.get(12 * (page-1) + buttonID
+					- 2));
 		}
 	}
 
@@ -51,6 +79,13 @@ public class GuiStateTypeMenu extends BaseGuiState
 	public void init()
 	{
 		page = 1;
+		addButtons();
+	}
+	
+	@Override
+	public void init(int page)
+	{
+		this.page = page;
 		addButtons();
 	}
 }

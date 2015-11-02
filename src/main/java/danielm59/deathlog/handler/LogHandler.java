@@ -1,8 +1,9 @@
 package danielm59.deathlog.handler;
 
 import java.io.IOException;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Set;
 
 import net.minecraft.command.ICommandSender;
@@ -157,9 +158,9 @@ public class LogHandler
 		saveData();
 	}
 
-	public static Set<String> getDeathTypes()
+	public static ArrayList<String> getDeathTypes()
 	{
-		Set<String> types = new HashSet<String>();
+		ArrayList<String> types = new ArrayList<String>();
 		for (String player : getPlayers("COUNT"))
 		{
 			for (String record : data.get(player).keySet())
@@ -167,7 +168,10 @@ public class LogHandler
 				if (record.substring(0, Math.min(record.length(), 5))
 						.compareTo("TYPE:") == 0)
 				{
-					types.add(record);
+					if(!types.contains(record))
+					{
+						types.add(record);
+					}
 				}
 			}
 		}

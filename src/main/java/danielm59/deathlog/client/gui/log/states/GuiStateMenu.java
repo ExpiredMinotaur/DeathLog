@@ -11,6 +11,7 @@ public class GuiStateMenu extends BaseGuiState
 	public GuiStateMenu(GuiDeathLog log)
 	{
 		super(log);
+		name = "Menu";
 	}
 
 	@Override
@@ -21,9 +22,9 @@ public class GuiStateMenu extends BaseGuiState
 	@Override
 	protected void addButtons()
 	{
-		log.addButton(new GuiButton(0, log.getLeft() + 18, log.getTop() + 24, 110, 20,
+		log.addButton(new GuiButton(0, log.getLeft() + 22, log.getTop() + 24, 120, 20,
 				"Death Count"));
-		log.addButton(new GuiButton(1, log.getLeft() + 18, log.getTop() + 46, 110, 20,
+		log.addButton(new GuiButton(1, log.getLeft() + 22, log.getTop() + 46, 120, 20,
 				"Death Types"));
 	}
 
@@ -45,6 +46,13 @@ public class GuiStateMenu extends BaseGuiState
 	public void init()
 	{
 		page = 1;
+		addButtons();
+	}
+	
+	@Override
+	public void init(int page)
+	{
+		this.page = page;
 		addButtons();
 	}
 }
