@@ -4,19 +4,19 @@ import danielm59.deathlog.handler.LogHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 
-public class CommandDeathLog extends CommandBase
+public class CommandDeaths extends CommandBase
 {
 
 	@Override
 	public String getCommandName()
 	{
-		return "deathlog";
+		return "deaths";
 	}
 
 	@Override
 	public String getCommandUsage(ICommandSender sender)
 	{
-		return "/deathlog";
+		return "/deaths";
 	}
 
 	@Override
@@ -24,15 +24,17 @@ public class CommandDeathLog extends CommandBase
 	{
 		if (astring.length == 0)
 		{
-			// display uses
+			LogHandler.deathsCommand(sender, sender.getCommandSenderName());
 		} else
 		{
-			if (astring[0].compareToIgnoreCase("reset") == 0)
-			{
-				LogHandler.reset();
-			}
+			LogHandler.deathsCommand(sender, astring[0]);
 		}
+	}
 
+	@Override
+	public boolean canCommandSenderUseCommand(ICommandSender sender)
+	{
+		return true;
 	}
 
 }

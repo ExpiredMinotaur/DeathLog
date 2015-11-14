@@ -1,6 +1,5 @@
 package danielm59.deathlog;
 
-import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -13,6 +12,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
 import danielm59.deathlog.commands.CommandDeathLog;
+import danielm59.deathlog.commands.CommandDeaths;
 import danielm59.deathlog.handler.ConfigurationHandler;
 import danielm59.deathlog.handler.DLEventHandler;
 import danielm59.deathlog.handler.GuiHandler;
@@ -24,6 +24,7 @@ import danielm59.deathlog.init.Recipes;
 import danielm59.deathlog.proxy.IProxy;
 import danielm59.deathlog.reference.Reference;
 import danielm59.deathlog.utility.LogHelper;
+import net.minecraftforge.common.MinecraftForge;
 
 @Mod(modid = Reference.MODID, name = Reference.MODNAME, version = Reference.VERSION, guiFactory = Reference.GUIFACTORY)
 public class DeathLog
@@ -66,6 +67,7 @@ public class DeathLog
 	public void serverLoad(FMLServerStartingEvent event)
 	{
 		LogHandler.loadData();
+		event.registerServerCommand(new CommandDeaths());
 		event.registerServerCommand(new CommandDeathLog());
 	}
 }
