@@ -1,13 +1,13 @@
 package danielm59.deathlog.handler;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.world.World;
 import cpw.mods.fml.common.network.IGuiHandler;
 import danielm59.deathlog.DeathLog;
 import danielm59.deathlog.client.gui.log.GuiDeathLog;
 import danielm59.deathlog.handler.network.LogMessage;
 import danielm59.deathlog.reference.GuiIDs;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.world.World;
 
 public class GuiHandler implements IGuiHandler
 {

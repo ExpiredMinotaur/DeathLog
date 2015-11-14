@@ -1,9 +1,9 @@
 package danielm59.deathlog.utility;
 
+import danielm59.deathlog.reference.Reference;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.util.StatCollector;
-import danielm59.deathlog.reference.Reference;
 
 public class LocalHelper
 {
@@ -16,8 +16,8 @@ public class LocalHelper
 			return StatCollector.translateToLocal(stringL);
 		} else
 		{
-			LogHelper.error(String.format("Translation not found for: %s",
-					stringL));
+			LogHelper.error(
+					String.format("Translation not found for: %s", stringL));
 			return string;
 		}
 	}
@@ -31,8 +31,8 @@ public class LocalHelper
 			return StatCollector.translateToLocal(entityName);
 		} else
 		{
-			LogHelper.error(String.format("Translation not found for: %s",
-					entityName));
+			LogHelper.error(
+					String.format("Translation not found for: %s", entityName));
 			return EntityList.getEntityString(entity);
 		}
 	}

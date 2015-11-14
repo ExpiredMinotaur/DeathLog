@@ -1,9 +1,8 @@
 package danielm59.deathlog.client.gui.log.states;
 
-import net.minecraft.client.gui.GuiButton;
 import danielm59.deathlog.client.gui.log.GuiDeathLog;
 import danielm59.deathlog.reference.LogGuiStates;
-import danielm59.deathlog.utility.LocalHelper;
+import net.minecraft.client.gui.GuiButton;
 
 public class GuiStateMenu extends BaseGuiState
 {
@@ -22,10 +21,10 @@ public class GuiStateMenu extends BaseGuiState
 	@Override
 	protected void addButtons()
 	{
-		log.addButton(new GuiButton(0, log.getLeft() + 22, log.getTop() + 24, 120, 20,
-				"Death Count"));
-		log.addButton(new GuiButton(1, log.getLeft() + 22, log.getTop() + 46, 120, 20,
-				"Death Types"));
+		log.addButton(new GuiButton(0, log.getLeft() + 22, log.getTop() + 24,
+				120, 20, "Death Count"));
+		log.addButton(new GuiButton(1, log.getLeft() + 22, log.getTop() + 46,
+				120, 20, "Death Types"));
 	}
 
 	@Override
@@ -41,14 +40,14 @@ public class GuiStateMenu extends BaseGuiState
 			break;
 		}
 	}
-	
+
 	@Override
 	public void init()
 	{
 		page = 1;
 		addButtons();
 	}
-	
+
 	@Override
 	public void init(int page)
 	{

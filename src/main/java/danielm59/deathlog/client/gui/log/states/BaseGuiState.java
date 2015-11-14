@@ -12,16 +12,20 @@ public abstract class BaseGuiState
 	{
 		this.log = log;
 	}
-	
+
 	public String getName()
 	{
 		return name;
 	}
-	
+
 	public abstract void init();
+
 	public abstract void init(int page);
+
 	public abstract void drawText();
+
 	protected abstract void addButtons();
+
 	public abstract void buttonClick(int buttonID);
 
 }

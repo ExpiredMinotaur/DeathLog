@@ -1,9 +1,9 @@
 package danielm59.deathlog.client.gui.log.states;
 
-import net.minecraft.client.gui.GuiButton;
 import danielm59.deathlog.client.gui.log.GuiDeathLog;
 import danielm59.deathlog.handler.LogHandler;
 import danielm59.deathlog.reference.LogGuiStates;
+import net.minecraft.client.gui.GuiButton;
 
 public class GuiStateCount extends BaseGuiState
 {
@@ -51,7 +51,7 @@ public class GuiStateCount extends BaseGuiState
 		page = 1;
 		addButtons();
 	}
-	
+
 	@Override
 	public void init(int page)
 	{

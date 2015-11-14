@@ -2,14 +2,6 @@ package danielm59.deathlog.client.gui.log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
@@ -21,6 +13,10 @@ import danielm59.deathlog.client.gui.log.states.GuiStateTypeMenu;
 import danielm59.deathlog.handler.LogHandler;
 import danielm59.deathlog.reference.LogGuiStates;
 import danielm59.deathlog.reference.Reference;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.util.ResourceLocation;
 
 public class GuiDeathLog extends GuiScreen
 {
@@ -57,7 +53,7 @@ public class GuiDeathLog extends GuiScreen
 		{
 			initData = false;
 			initStates();
-			state = states.get(LogGuiStates.MENU);	
+			state = states.get(LogGuiStates.MENU);
 		}
 		state.init();
 		stateLoaded = true;
@@ -86,8 +82,11 @@ public class GuiDeathLog extends GuiScreen
 		fontRendererObj.drawString(title,
 				left + xSize / 4 - fontRendererObj.getStringWidth(title) / 2,
 				top + 12, 0x000000);
-		fontRendererObj.drawString(state.getName(), left + 3 * xSize / 4
-				- fontRendererObj.getStringWidth(state.getName()) / 2,
+		fontRendererObj
+				.drawString(state.getName(),
+						left + 3 * xSize / 4
+								- fontRendererObj
+										.getStringWidth(state.getName()) / 2,
 				top + 12, 0x000000);
 		super.drawScreen(par1, par2, par3);
 	}
@@ -103,40 +102,40 @@ public class GuiDeathLog extends GuiScreen
 	{
 		state.buttonClick(button.id);
 	}
-	
+
 	@Override
-	public void onGuiClosed() 
+	public void onGuiClosed()
 	{
-		state = states.get(LogGuiStates.MENU);	
+		state = states.get(LogGuiStates.MENU);
 	}
 
 	public void addButton(GuiButton button)
 	{
 		buttonList.add(button);
 	}
-	
+
 	public void disableButton(int id)
 	{
-        for (int k = 0; k < this.buttonList.size(); ++k)
-        {
-            GuiButton button = (GuiButton)this.buttonList.get(k);
-            if(button.id == id)
-            {
-            	button.enabled = false;
-            }
-        }
+		for (int k = 0; k < this.buttonList.size(); ++k)
+		{
+			GuiButton button = (GuiButton) this.buttonList.get(k);
+			if (button.id == id)
+			{
+				button.enabled = false;
+			}
+		}
 	}
-	
+
 	public void enableButton(int id)
 	{
-        for (int k = 0; k < this.buttonList.size(); ++k)
-        {
-            GuiButton button = (GuiButton)this.buttonList.get(k);
-            if(button.id == id)
-            {
-            	button.enabled = true;
-            }
-        }
+		for (int k = 0; k < this.buttonList.size(); ++k)
+		{
+			GuiButton button = (GuiButton) this.buttonList.get(k);
+			if (button.id == id)
+			{
+				button.enabled = true;
+			}
+		}
 	}
 
 	public FontRenderer font()
@@ -160,7 +159,7 @@ public class GuiDeathLog extends GuiScreen
 		buttonList.clear();
 		stateLoaded = false;
 	}
-	
+
 	public void loadPage(int page)
 	{
 		buttonList.clear();

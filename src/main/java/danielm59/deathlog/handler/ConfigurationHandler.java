@@ -2,10 +2,10 @@ package danielm59.deathlog.handler;
 
 import java.io.File;
 
-import net.minecraftforge.common.config.Configuration;
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import danielm59.deathlog.reference.Reference;
+import net.minecraftforge.common.config.Configuration;
 
 public class ConfigurationHandler
 {

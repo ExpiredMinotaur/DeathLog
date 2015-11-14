@@ -1,10 +1,10 @@
 package danielm59.deathlog.client.gui.log.states;
 
-import net.minecraft.client.gui.GuiButton;
 import danielm59.deathlog.client.gui.log.GuiDeathLog;
 import danielm59.deathlog.handler.LogHandler;
 import danielm59.deathlog.reference.LogGuiStates;
 import danielm59.deathlog.utility.LocalHelper;
+import net.minecraft.client.gui.GuiButton;
 
 public class GuiStateType extends BaseGuiState
 {
@@ -21,8 +21,11 @@ public class GuiStateType extends BaseGuiState
 		int i = 1;
 		for (String player : LogHandler.getPlayers(log.getDeathType()))
 		{
-			log.font().drawString(
-					player + " : " + LogHandler.getDeaths(player, log.getDeathType()),
+			log.font()
+					.drawString(
+							player + " : "
+									+ LogHandler.getDeaths(player,
+											log.getDeathType()),
 					log.getLeft() + 18, log.getTop() + 14 + (12 * i), 0x000000);
 			i++;
 		}
@@ -45,14 +48,14 @@ public class GuiStateType extends BaseGuiState
 			break;
 		}
 	}
-	
+
 	@Override
 	public void init()
 	{
 		page = 1;
 		addButtons();
 	}
-	
+
 	@Override
 	public void init(int page)
 	{

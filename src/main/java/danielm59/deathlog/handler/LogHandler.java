@@ -3,20 +3,19 @@ package danielm59.deathlog.handler;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Set;
 
+import danielm59.deathlog.DeathLog;
+import danielm59.deathlog.utility.IOHelper;
+import danielm59.deathlog.utility.LocalHelper;
+import danielm59.deathlog.utility.LogHelper;
+import danielm59.deathlog.utility.SortHelper;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import danielm59.deathlog.DeathLog;
-import danielm59.deathlog.utility.IOHelper;
-import danielm59.deathlog.utility.LocalHelper;
-import danielm59.deathlog.utility.LogHelper;
-import danielm59.deathlog.utility.SortHelper;
 
 public class LogHandler
 {
@@ -70,9 +69,9 @@ public class LogHandler
 	{
 		if (statRecorded(player, "COUNT"))
 		{
-			sender.addChatMessage(new ChatComponentText(String.format(
-					LocalHelper.getLocalString("deathmessage"), player,
-					getDeaths(player, "COUNT"))));
+			sender.addChatMessage(new ChatComponentText(
+					String.format(LocalHelper.getLocalString("deathmessage"),
+							player, getDeaths(player, "COUNT"))));
 		} else
 		{
 			sender.addChatMessage(new ChatComponentText(String.format(
@@ -113,13 +112,10 @@ public class LogHandler
 
 	private static void tellAll(String player)
 	{
-		MinecraftServer
-				.getServer()
-				.getConfigurationManager()
-				.sendChatMsg(
-						new ChatComponentText(String.format(
-								LocalHelper.getLocalString("deathmessage"),
-								player, getDeaths(player, "COUNT"))));
+		MinecraftServer.getServer().getConfigurationManager()
+				.sendChatMsg(new ChatComponentText(String.format(
+						LocalHelper.getLocalString("deathmessage"), player,
+						getDeaths(player, "COUNT"))));
 	}
 
 	public static void update(LinkedHashMap newData)
@@ -168,7 +164,7 @@ public class LogHandler
 				if (record.substring(0, Math.min(record.length(), 5))
 						.compareTo("TYPE:") == 0)
 				{
-					if(!types.contains(record))
+					if (!types.contains(record))
 					{
 						types.add(record);
 					}
@@ -176,6 +172,12 @@ public class LogHandler
 			}
 		}
 		return types;
+	}
+
+	public static void reset()
+	{
+		data.clear();
+		saveData();
 	}
 
 }
