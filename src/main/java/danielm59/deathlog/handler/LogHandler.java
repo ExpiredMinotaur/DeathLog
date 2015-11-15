@@ -101,10 +101,14 @@ public class LogHandler
 	{
 		int oldCount = 0;
 		LinkedHashMap<String, Integer> playerData = new LinkedHashMap<String, Integer>();
-		playerData = (LinkedHashMap<String, Integer>) data.get(player).clone();
-		if (statRecorded(player, stat))
+		if (data.containsKey(player))
 		{
-			oldCount = playerData.get(stat);
+			playerData = (LinkedHashMap<String, Integer>) data.get(player)
+					.clone();
+			if (statRecorded(player, stat))
+			{
+				oldCount = playerData.get(stat);
+			}
 		}
 		playerData.put(stat, oldCount + 1);
 		data.put(player, playerData);

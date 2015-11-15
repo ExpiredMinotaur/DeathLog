@@ -1,8 +1,10 @@
 package danielm59.deathlog.commands;
 
 import danielm59.deathlog.handler.LogHandler;
+import danielm59.deathlog.utility.LocalHelper;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.util.ChatComponentText;
 
 public class CommandDeathLog extends CommandBase
 {
@@ -30,6 +32,7 @@ public class CommandDeathLog extends CommandBase
 			if (astring[0].compareToIgnoreCase("reset") == 0)
 			{
 				LogHandler.reset();
+				sender.addChatMessage(new ChatComponentText("Data Reset"));
 			}
 		}
 
