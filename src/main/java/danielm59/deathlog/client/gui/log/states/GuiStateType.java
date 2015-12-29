@@ -21,12 +21,8 @@ public class GuiStateType extends BaseGuiState
 		int i = 1;
 		for (String player : LogHandler.getPlayers(log.getDeathType()))
 		{
-			log.font()
-					.drawString(
-							player + " : "
-									+ LogHandler.getDeaths(player,
-											log.getDeathType()),
-					log.getLeft() + 18, log.getTop() + 14 + (12 * i), 0x000000);
+			log.font().drawString(player + " : " + LogHandler.getDeaths(player, log.getDeathType()), log.getLeft() + 18,
+					log.getTop() + 14 + (12 * i), 0x000000);
 			i++;
 		}
 	}
@@ -34,8 +30,7 @@ public class GuiStateType extends BaseGuiState
 	@Override
 	protected void addButtons()
 	{
-		log.addButton(new GuiButton(0, log.getLeft() + 22, log.getTop() + 160,
-				120, 20, "Back"));
+		log.addButton(new GuiButton(0, log.getLeft() + 22, log.getTop() + 160, 120, 20, "Back"));
 	}
 
 	@Override

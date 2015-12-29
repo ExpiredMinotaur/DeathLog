@@ -21,10 +21,8 @@ public class GuiStateMenu extends BaseGuiState
 	@Override
 	protected void addButtons()
 	{
-		log.addButton(new GuiButton(0, log.getLeft() + 22, log.getTop() + 24,
-				120, 20, "Death Count"));
-		log.addButton(new GuiButton(1, log.getLeft() + 22, log.getTop() + 46,
-				120, 20, "Death Types"));
+		log.addButton(new GuiButton(0, log.getLeft() + 22, log.getTop() + 24, 120, 20, "Death Count"));
+		log.addButton(new GuiButton(1, log.getLeft() + 22, log.getTop() + 46, 120, 20, "Death Types"));
 	}
 
 	@Override

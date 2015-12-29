@@ -2,8 +2,8 @@ package danielm59.deathlog.utility;
 
 import org.apache.logging.log4j.Level;
 
-import cpw.mods.fml.common.FMLLog;
 import danielm59.deathlog.reference.Reference;
+import net.minecraftforge.fml.common.FMLLog;
 
 public class LogHelper
 {

@@ -22,8 +22,7 @@ public class GuiDeathLog extends GuiScreen
 {
 	public static GuiDeathLog log = new GuiDeathLog();
 
-	public static final ResourceLocation texture = new ResourceLocation(
-			Reference.LogGUI);
+	public static final ResourceLocation texture = new ResourceLocation(Reference.LogGUI);
 
 	private HashMap<LogGuiStates, BaseGuiState> states = new HashMap<LogGuiStates, BaseGuiState>();
 
@@ -72,21 +71,15 @@ public class GuiDeathLog extends GuiScreen
 	{
 		GL11.glColor4f(1F, 1F, 1F, 1F);
 		mc.renderEngine.bindTexture(texture);
-		func_146110_a(left, top, 0, 0, xSize, ySize, 256 * scale, 256 * scale);
+		drawModalRectWithCustomSizedTexture(left, top, 0, 0, xSize, ySize, 256 * scale, 256 * scale);
 		if (!stateLoaded)
 		{
 			state.init();
 			stateLoaded = true;
 		}
 		state.drawText();
-		fontRendererObj.drawString(title,
-				left + xSize / 4 - fontRendererObj.getStringWidth(title) / 2,
-				top + 12, 0x000000);
-		fontRendererObj
-				.drawString(state.getName(),
-						left + 3 * xSize / 4
-								- fontRendererObj
-										.getStringWidth(state.getName()) / 2,
+		fontRendererObj.drawString(title, left + xSize / 4 - fontRendererObj.getStringWidth(title) / 2, top + 12, 0x000000);
+		fontRendererObj.drawString(state.getName(), left + 3 * xSize / 4 - fontRendererObj.getStringWidth(state.getName()) / 2,
 				top + 12, 0x000000);
 		super.drawScreen(par1, par2, par3);
 	}

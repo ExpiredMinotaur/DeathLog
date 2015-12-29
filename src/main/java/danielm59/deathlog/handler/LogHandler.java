@@ -25,8 +25,7 @@ public class LogHandler
 	{
 		try
 		{
-			data = (LinkedHashMap<String, LinkedHashMap<String, Integer>>) IOHelper
-					.readObject(DeathLog.proxy.getLogPath());
+			data = (LinkedHashMap<String, LinkedHashMap<String, Integer>>) IOHelper.readObject(DeathLog.proxy.getLogPath());
 		} catch (IOException e)
 		{
 			LogHelper.info("Death data not found");
@@ -70,12 +69,10 @@ public class LogHandler
 		if (statRecorded(player, "COUNT"))
 		{
 			sender.addChatMessage(new ChatComponentText(
-					String.format(LocalHelper.getLocalString("deathmessage"),
-							player, getDeaths(player, "COUNT"))));
+					String.format(LocalHelper.getLocalString("deathmessage"), player, getDeaths(player, "COUNT"))));
 		} else
 		{
-			sender.addChatMessage(new ChatComponentText(String.format(
-					LocalHelper.getLocalString("nodatamessage"), player)));
+			sender.addChatMessage(new ChatComponentText(String.format(LocalHelper.getLocalString("nodatamessage"), player)));
 		}
 	}
 
@@ -103,8 +100,7 @@ public class LogHandler
 		LinkedHashMap<String, Integer> playerData = new LinkedHashMap<String, Integer>();
 		if (data.containsKey(player))
 		{
-			playerData = (LinkedHashMap<String, Integer>) data.get(player)
-					.clone();
+			playerData = (LinkedHashMap<String, Integer>) data.get(player).clone();
 			if (statRecorded(player, stat))
 			{
 				oldCount = playerData.get(stat);
@@ -116,10 +112,8 @@ public class LogHandler
 
 	private static void tellAll(String player)
 	{
-		MinecraftServer.getServer().getConfigurationManager()
-				.sendChatMsg(new ChatComponentText(String.format(
-						LocalHelper.getLocalString("deathmessage"), player,
-						getDeaths(player, "COUNT"))));
+		MinecraftServer.getServer().getConfigurationManager().sendChatMsg(new ChatComponentText(
+				String.format(LocalHelper.getLocalString("deathmessage"), player, getDeaths(player, "COUNT"))));
 	}
 
 	public static void update(LinkedHashMap newData)
@@ -136,18 +130,22 @@ public class LogHandler
 	public static Set<String> getPlayers(String type)
 	{
 		LinkedHashMap<String, Integer> sortData = new LinkedHashMap();
-		for (String key : data.keySet())
+		if (data.size() != 0)
 		{
-			if (data.get(key).containsKey(type))
+			for (String key : data.keySet())
 			{
-				sortData.put(key, data.get(key).get(type));
-			} else
-			{
-				sortData.put(key, 0);
+				if (data.get(key).containsKey(type))
+				{
+					sortData.put(key, data.get(key).get(type));
+				} else
+				{
+					sortData.put(key, 0);
+				}
 			}
+			LinkedHashMap<String, Integer> sortedData = SortHelper.sort(sortData);
+			return sortedData.keySet();
 		}
-		LinkedHashMap<String, Integer> sortedData = SortHelper.sort(sortData);
-		return sortedData.keySet();
+		return data.keySet();
 	}
 
 	public static void registerPlayer(String player)
@@ -165,8 +163,7 @@ public class LogHandler
 		{
 			for (String record : data.get(player).keySet())
 			{
-				if (record.substring(0, Math.min(record.length(), 5))
-						.compareTo("TYPE:") == 0)
+				if (record.substring(0, Math.min(record.length(), 5)).compareTo("TYPE:") == 0)
 				{
 					if (!types.contains(record))
 					{

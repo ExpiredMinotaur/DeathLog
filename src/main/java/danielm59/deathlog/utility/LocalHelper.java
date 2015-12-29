@@ -9,30 +9,26 @@ public class LocalHelper
 {
 	public static String getLocalString(String string)
 	{
-		String stringL = String.format("string.%s:%s.string", Reference.MODID,
-				string);
+		String stringL = String.format("string.%s:%s.string", Reference.MODID, string);
 		if (StatCollector.canTranslate(stringL))
 		{
 			return StatCollector.translateToLocal(stringL);
 		} else
 		{
-			LogHelper.error(
-					String.format("Translation not found for: %s", stringL));
+			LogHelper.error(String.format("Translation not found for: %s", stringL));
 			return string;
 		}
 	}
 
 	public static String getLocalEntityName(Entity entity)
 	{
-		String entityName = String.format("entity.%s.name",
-				EntityList.getEntityString(entity));
+		String entityName = String.format("entity.%s.name", EntityList.getEntityString(entity));
 		if (StatCollector.canTranslate(entityName))
 		{
 			return StatCollector.translateToLocal(entityName);
 		} else
 		{
-			LogHelper.error(
-					String.format("Translation not found for: %s", entityName));
+			LogHelper.error(String.format("Translation not found for: %s", entityName));
 			return EntityList.getEntityString(entity);
 		}
 	}

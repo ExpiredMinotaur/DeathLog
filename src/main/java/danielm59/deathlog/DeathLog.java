@@ -1,16 +1,5 @@
 package danielm59.deathlog;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import cpw.mods.fml.relauncher.Side;
 import danielm59.deathlog.commands.CommandDeathLog;
 import danielm59.deathlog.commands.CommandDeaths;
 import danielm59.deathlog.handler.ConfigurationHandler;
@@ -25,6 +14,17 @@ import danielm59.deathlog.proxy.IProxy;
 import danielm59.deathlog.reference.Reference;
 import danielm59.deathlog.utility.LogHelper;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.fml.relauncher.Side;
 
 @Mod(modid = Reference.MODID, name = Reference.MODNAME, version = Reference.VERSION, guiFactory = Reference.GUIFACTORY)
 public class DeathLog
@@ -42,8 +42,7 @@ public class DeathLog
 		ConfigurationHandler.init(event.getSuggestedConfigurationFile());
 		FMLCommonHandler.instance().bus().register(new ConfigurationHandler());
 		snw = NetworkRegistry.INSTANCE.newSimpleChannel(Reference.MODID);
-		snw.registerMessage(LogMessageHandler.class, LogMessage.class, 0,
-				Side.CLIENT);
+		snw.registerMessage(LogMessageHandler.class, LogMessage.class, 0, Side.CLIENT);
 		ModItems.init();
 		LogHelper.info("Pre Initialization Complete!");
 	}
@@ -54,6 +53,7 @@ public class DeathLog
 		Recipes.init();
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
 		MinecraftForge.EVENT_BUS.register(new DLEventHandler());
+		proxy.loadTextures();
 		LogHelper.info("Initialization Complete!");
 	}
 

@@ -1,7 +1,6 @@
 package danielm59.deathlog.commands;
 
 import danielm59.deathlog.handler.LogHandler;
-import danielm59.deathlog.utility.LocalHelper;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;

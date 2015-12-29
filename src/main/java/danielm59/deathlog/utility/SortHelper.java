@@ -10,11 +10,9 @@ import java.util.Map.Entry;
 
 public class SortHelper
 {
-	public static <K extends Comparable, V extends Comparable> LinkedHashMap<K, V> sort(
-			Map<K, V> map)
+	public static <K extends Comparable, V extends Comparable> LinkedHashMap<K, V> sort(Map<K, V> map)
 	{
-		List<Map.Entry<K, V>> entries = new LinkedList<Map.Entry<K, V>>(
-				map.entrySet());
+		List<Map.Entry<K, V>> entries = new LinkedList<Map.Entry<K, V>>(map.entrySet());
 
 		Collections.sort(entries, new Comparator<Map.Entry<K, V>>()
 		{

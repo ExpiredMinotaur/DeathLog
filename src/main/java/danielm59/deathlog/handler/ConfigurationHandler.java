@@ -2,10 +2,10 @@ package danielm59.deathlog.handler;
 
 import java.io.File;
 
-import cpw.mods.fml.client.event.ConfigChangedEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import danielm59.deathlog.reference.Reference;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ConfigurationHandler
 {
@@ -26,8 +26,7 @@ public class ConfigurationHandler
 	}
 
 	@SubscribeEvent
-	public void onConfigurationChangedEvent(
-			ConfigChangedEvent.OnConfigChangedEvent event)
+	public void onConfigurationChangedEvent(ConfigChangedEvent.OnConfigChangedEvent event)
 	{
 
 		if (event.modID.equalsIgnoreCase(Reference.MODID))

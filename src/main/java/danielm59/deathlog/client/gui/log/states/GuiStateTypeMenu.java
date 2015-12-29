@@ -22,10 +22,8 @@ public class GuiStateTypeMenu extends BaseGuiState
 	@Override
 	protected void addButtons()
 	{
-		log.addButton(new GuiButton(0, log.getLeft() + 22, log.getTop() + 160,
-				120, 20, "Back"));
-		log.addButton(new GuiButton(1, log.getLeft() + 190, log.getTop() + 160,
-				120, 20, "Next"));
+		log.addButton(new GuiButton(0, log.getLeft() + 22, log.getTop() + 160, 120, 20, "Back"));
+		log.addButton(new GuiButton(1, log.getLeft() + 190, log.getTop() + 160, 120, 20, "Next"));
 		if (log.deathTypes.size() <= 12 * page)
 		{
 			log.disableButton(1);
@@ -33,22 +31,17 @@ public class GuiStateTypeMenu extends BaseGuiState
 		{
 			log.enableButton(1);
 		}
-		for (int i = 0; i < Math.min(12,
-				log.deathTypes.size() - (page - 1) * 12); i++)
+		for (int i = 0; i < Math.min(12, log.deathTypes.size() - (page - 1) * 12); i++)
 		{
 			if (i < 6)
 			{
-				String buttonName = LocalHelper.getLocalString(
-						log.deathTypes.get(i + 12 * (page - 1)));
-				log.addButton(new GuiButton(i + 2, log.getLeft() + 22,
-						log.getTop() + 24 + (22 * i), 120, 20, buttonName));
+				String buttonName = LocalHelper.getLocalString(log.deathTypes.get(i + 12 * (page - 1)));
+				log.addButton(new GuiButton(i + 2, log.getLeft() + 22, log.getTop() + 24 + (22 * i), 120, 20, buttonName));
 			} else
 			{
-				String buttonName = LocalHelper.getLocalString(
-						log.deathTypes.get(i + 12 * (page - 1)));
-				log.addButton(new GuiButton(i + 2, log.getLeft() + 190,
-						log.getTop() + 24 + (22 * (i - 6)), 120, 20,
-						buttonName));
+				String buttonName = LocalHelper.getLocalString(log.deathTypes.get(i + 12 * (page - 1)));
+				log.addButton(
+						new GuiButton(i + 2, log.getLeft() + 190, log.getTop() + 24 + (22 * (i - 6)), 120, 20, buttonName));
 			}
 		}
 	}
@@ -72,8 +65,7 @@ public class GuiStateTypeMenu extends BaseGuiState
 			break;
 		default:
 			log.SetGuiState(LogGuiStates.TYPE);
-			log.setDeathType((String) log.deathTypes
-					.get(12 * (page - 1) + buttonID - 2));
+			log.setDeathType((String) log.deathTypes.get(12 * (page - 1) + buttonID - 2));
 		}
 	}
 

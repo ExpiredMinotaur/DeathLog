@@ -9,8 +9,7 @@ import java.io.ObjectOutputStream;
 
 public class IOHelper
 {
-	public static Object readObject(String filename)
-			throws IOException, ClassNotFoundException
+	public static Object readObject(String filename) throws IOException, ClassNotFoundException
 	{
 
 		FileInputStream fileIn = new FileInputStream(filename);

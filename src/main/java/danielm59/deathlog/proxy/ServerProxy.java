@@ -2,8 +2,8 @@ package danielm59.deathlog.proxy;
 
 import java.io.IOException;
 
-import cpw.mods.fml.server.FMLServerHandler;
 import net.minecraft.server.MinecraftServer;
+import net.minecraftforge.fml.server.FMLServerHandler;
 
 public class ServerProxy extends CommonProxy
 {
@@ -19,7 +19,6 @@ public class ServerProxy extends CommonProxy
 	{
 		MinecraftServer server = FMLServerHandler.instance().getServer();
 		String worldName = (server != null) ? server.getFolderName() : "world";
-		return FMLServerHandler.instance().getSavesDirectory() + "/" + worldName
-				+ "/DeathLog/log.dat";
+		return FMLServerHandler.instance().getSavesDirectory() + "/" + worldName + "/DeathLog/log.dat";
 	}
 }
