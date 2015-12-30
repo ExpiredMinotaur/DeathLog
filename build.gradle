@@ -24,7 +24,7 @@ group= "danielm59.deathlog" // http://maven.apache.org/guides/mini/guide-naming-
 archivesBaseName = "deathlog"
 
 minecraft {
-    version = "1.8.8-11.15.0.1654-1.8.8"
+    version = "1.8.9-11.15.0.1661"
     runDir = "eclipse"
 	replace '@VERSION@', project.version
 	mappings = "snapshot_20151122"
