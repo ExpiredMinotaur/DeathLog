@@ -1,6 +1,7 @@
 package danielm59.deathlog.utility;
 
 import danielm59.deathlog.reference.Reference;
+import io.github.danielm59.m59Libs.utility.LogHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.util.StatCollector;

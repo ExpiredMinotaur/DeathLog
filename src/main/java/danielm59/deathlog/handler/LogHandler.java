@@ -8,8 +8,8 @@ import java.util.Set;
 import danielm59.deathlog.DeathLog;
 import danielm59.deathlog.utility.IOHelper;
 import danielm59.deathlog.utility.LocalHelper;
-import danielm59.deathlog.utility.LogHelper;
 import danielm59.deathlog.utility.SortHelper;
+import io.github.danielm59.m59Libs.utility.LogHelper;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,6 +21,7 @@ public class LogHandler
 {
 	static LinkedHashMap<String, LinkedHashMap<String, Integer>> data = new LinkedHashMap<String, LinkedHashMap<String, Integer>>();
 
+	@SuppressWarnings("unchecked")
 	public static void loadData()
 	{
 		try
@@ -49,7 +50,7 @@ public class LogHandler
 	public static void logEvent(LivingDeathEvent event)
 	{
 		EntityPlayer playerE = (EntityPlayer) event.entity;
-		String player = playerE.getCommandSenderName();
+		String player = playerE.getName();
 		String damageType = event.source.getDamageType();
 		addDeath(player, String.format("TYPE:%s", damageType));
 		if (damageType == "mob")
@@ -94,6 +95,7 @@ public class LogHandler
 		return false;
 	}
 
+	@SuppressWarnings("unchecked")
 	private static void addDeath(String player, String stat)
 	{
 		int oldCount = 0;
@@ -116,20 +118,20 @@ public class LogHandler
 				String.format(LocalHelper.getLocalString("deathmessage"), player, getDeaths(player, "COUNT"))));
 	}
 
-	public static void update(LinkedHashMap newData)
+	public static void update(LinkedHashMap<String, LinkedHashMap<String, Integer>> newData)
 	{
 		data.clear();
 		data.putAll(newData);
 	}
 
-	public static LinkedHashMap getData()
+	public static LinkedHashMap<String, LinkedHashMap<String, Integer>> getData()
 	{
 		return data;
 	}
 
 	public static Set<String> getPlayers(String type)
 	{
-		LinkedHashMap<String, Integer> sortData = new LinkedHashMap();
+		LinkedHashMap<String, Integer> sortData = new LinkedHashMap<String, Integer>();
 		if (data.size() != 0)
 		{
 			for (String key : data.keySet())
@@ -150,7 +152,7 @@ public class LogHandler
 
 	public static void registerPlayer(String player)
 	{
-		LinkedHashMap<String, Integer> entry = new LinkedHashMap();
+		LinkedHashMap<String, Integer> entry = new LinkedHashMap<String, Integer>();
 		entry.put("COUNT", 0);
 		data.put(player, entry);
 		saveData();

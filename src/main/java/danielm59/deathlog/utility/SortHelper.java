@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 
 public class SortHelper
 {
+	@SuppressWarnings("rawtypes")
 	public static <K extends Comparable, V extends Comparable> LinkedHashMap<K, V> sort(Map<K, V> map)
 	{
 		List<Map.Entry<K, V>> entries = new LinkedList<Map.Entry<K, V>>(map.entrySet());
@@ -17,6 +18,7 @@ public class SortHelper
 		Collections.sort(entries, new Comparator<Map.Entry<K, V>>()
 		{
 
+			@SuppressWarnings("unchecked")
 			@Override
 			public int compare(Entry<K, V> o1, Entry<K, V> o2)
 			{

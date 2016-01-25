@@ -8,13 +8,13 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 public class LogMessage implements IMessage
 {
-	LinkedHashMap<String, LinkedHashMap<String, Integer>> toSend = new LinkedHashMap();
+	LinkedHashMap<String, LinkedHashMap<String, Integer>> toSend = new LinkedHashMap<String, LinkedHashMap<String, Integer>>();
 
 	public LogMessage()
 	{
 	}
 
-	public LogMessage(LinkedHashMap toSend)
+	public LogMessage(LinkedHashMap<String, LinkedHashMap<String, Integer>> toSend)
 	{
 		this.toSend.clear();
 		this.toSend.putAll(toSend);
@@ -45,7 +45,7 @@ public class LogMessage implements IMessage
 		for (int i = 0; i < size; i++)
 		{
 			String player = ByteBufUtils.readUTF8String(buf);
-			LinkedHashMap<String, Integer> playerData = new LinkedHashMap();
+			LinkedHashMap<String, Integer> playerData = new LinkedHashMap<String, Integer>();
 			int size2 = buf.readInt();
 			for (int j = 0; j < size2; j++)
 			{

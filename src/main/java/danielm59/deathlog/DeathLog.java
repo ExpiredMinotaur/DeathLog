@@ -12,9 +12,8 @@ import danielm59.deathlog.init.ModItems;
 import danielm59.deathlog.init.Recipes;
 import danielm59.deathlog.proxy.IProxy;
 import danielm59.deathlog.reference.Reference;
-import danielm59.deathlog.utility.LogHelper;
+import io.github.danielm59.m59Libs.utility.LogHelper;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -26,7 +25,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 
-@Mod(modid = Reference.MODID, name = Reference.MODNAME, version = Reference.VERSION, guiFactory = Reference.GUIFACTORY)
+@Mod(modid = Reference.MODID, name = Reference.MODNAME, version = Reference.VERSION, guiFactory = Reference.GUIFACTORY,dependencies = "required-after:m59Libs")
 public class DeathLog
 {
 	@Mod.Instance(Reference.MODID)
@@ -40,7 +39,7 @@ public class DeathLog
 	public void PreInit(FMLPreInitializationEvent event)
 	{
 		ConfigurationHandler.init(event.getSuggestedConfigurationFile());
-		FMLCommonHandler.instance().bus().register(new ConfigurationHandler());
+		MinecraftForge.EVENT_BUS.register(new ConfigurationHandler());
 		snw = NetworkRegistry.INSTANCE.newSimpleChannel(Reference.MODID);
 		snw.registerMessage(LogMessageHandler.class, LogMessage.class, 0, Side.CLIENT);
 		ModItems.init();

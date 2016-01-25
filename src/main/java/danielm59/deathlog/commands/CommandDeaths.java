@@ -24,7 +24,7 @@ public class CommandDeaths extends CommandBase
 	{
 		if (astring.length == 0)
 		{
-			LogHandler.deathsCommand(sender, sender.getCommandSenderName());
+			LogHandler.deathsCommand(sender, sender.getName());
 		} else
 		{
 			LogHandler.deathsCommand(sender, astring[0]);
