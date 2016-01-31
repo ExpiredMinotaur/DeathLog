@@ -9,7 +9,7 @@ import io.github.danielm59.deathlog.DeathLog;
 import io.github.danielm59.deathlog.utility.IOHelper;
 import io.github.danielm59.deathlog.utility.LocalHelper;
 import io.github.danielm59.deathlog.utility.SortHelper;
-import io.github.danielm59.m59Libs.utility.LogHelper;
+import io.github.danielm59.m59Libs.log.LogHelper;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
