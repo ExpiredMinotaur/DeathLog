@@ -12,7 +12,6 @@ import io.github.danielm59.deathlog.init.ModItems;
 import io.github.danielm59.deathlog.init.Recipes;
 import io.github.danielm59.deathlog.proxy.IProxy;
 import io.github.danielm59.deathlog.reference.Reference;
-import io.github.danielm59.m59Libs.log.LogHelper;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -43,7 +42,6 @@ public class DeathLog
 		snw = NetworkRegistry.INSTANCE.newSimpleChannel(Reference.MODID);
 		snw.registerMessage(LogMessageHandler.class, LogMessage.class, 0, Side.CLIENT);
 		ModItems.init();
-		LogHelper.info("Pre Initialization Complete!");
 	}
 
 	@EventHandler
@@ -53,13 +51,11 @@ public class DeathLog
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
 		MinecraftForge.EVENT_BUS.register(new DLEventHandler());
 		proxy.loadTextures();
-		LogHelper.info("Initialization Complete!");
 	}
 
 	@EventHandler
 	public void PostInit(FMLPostInitializationEvent event)
 	{
-		LogHelper.info("Post Initialization Complete!");
 	}
 
 	@EventHandler
